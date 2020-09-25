@@ -40,13 +40,13 @@ int main(){
                     ans.push_back({i, r, x});
                 }
             }
-            else{
+            else
                 root[x] = i;
-            }
+            
 			//auto r = root.insert({x, i}).first->second;
             
-		}
-	}
+        }
+    }
     
     if(ans.size() == n-1)
         for(auto p : ans) cout << p.i+1 << ' ' << p.j+1 << ' ' << p.n << endl;
