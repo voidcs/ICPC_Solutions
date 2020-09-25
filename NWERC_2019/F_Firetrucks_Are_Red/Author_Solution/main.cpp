@@ -14,10 +14,13 @@ struct UnionFind {
 	int count() { return c; }
 	int merge(int i, int j) {
 		if ((i = find(i)) == (j = find(j))) return -1; else --c;
-		if (rank[i] > rank[j]) swap(i, j);
-		par[i] = j; size[j] += size[i];
-		if (rank[i] == rank[j]) rank[j]++;
-		return j;
+        i = find(i), j = find(j);
+        if(i == j)
+            return -1;
+		//if (rank[i] > rank[j]) swap(i, j);
+		par[i] = j;
+		//if (rank[i] == rank[j]) rank[j]++;
+		//return j;
 	}
 };
 
@@ -32,7 +35,7 @@ int main(){
 	for(int i = 0; i < n; ++i){
 		int m; cin >> m;
 		while(m--){
-			int x; cin >> x;
+		int x; cin >> x;
             int r;
             if(root.count(x)){
                 r = root[x];
@@ -42,8 +45,7 @@ int main(){
                 }
             }
             else{
-                root.insert({x, i});
-                r = i;
+                root[x] = i;
             }
 			//auto r = root.insert({x, i}).first->second;
             
