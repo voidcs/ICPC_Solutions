@@ -27,30 +27,24 @@ int main(){
             }
         }
     }
-   
-//    for(int i = 0; i < L; i++){
-//        for(int j = 0; j < W; j++)
-//            cout<<G[i][j];
-//        cout<<endl;
-//    }
-//    cout<<"st: "<<st<<endl;
-//    cout<<"en: "<<en<<endl;
+
     int n = int(locs.size());
-    auto bfs = [&](auto is_adj){
+    auto bfs = [&](function<bool(int, int)> valid){
         vector<int> dist(n, -1);
-        vector<int> q; 
+        queue<int> q; 
         dist[st] = 0;
-        q.push_back(st);
-        for(int i = 0; i < int(q.size()); i++){
-            int cur = q[i];
+        q.push(st);
+        while(!q.empty()){
+            int cur = q.front();
+            q.pop();
             for(int nxt = 0; nxt < n; nxt++){
                 if(dist[nxt] != -1)
                     continue;
                 int d0 = abs(locs[cur][0] - locs[nxt][0]);
                 int d1 = abs(locs[cur][1] - locs[nxt][1]);
-                if(is_adj(d0, d1)){
+                if(valid(d0, d1)){
                     dist[nxt] = dist[cur] + 1;
-                    q.push_back(nxt);
+                    q.push(nxt);
                 }
             }
         }
@@ -64,12 +58,11 @@ int main(){
     int df = bfs([&](int a, int b) -> bool{
         return min(a, b) == 0 && max(a, b) <= F;
     });
-
     if(da == -1 && df == -1)
         cout<<"NO WAY\n";
     else{
         if(da == -1)
-            da = n+1;
+            da = n+1; 
         if(df == -1)
             df = n+1;
         if(da == df)
