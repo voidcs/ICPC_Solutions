@@ -27,9 +27,6 @@ int main(){
     }
     sort(check, check + n);
     sort(goSecond, goSecond + n);
-    set<ll> fastest;
-    for(int i = 0; i < 4; i++)
-        fastest.insert(goSecond[i][1]);
     
     answer ans;
     ans.time = 1e18;
