@@ -16,11 +16,12 @@ int main(){
     ll speeds[n];
     for(int i = 0; i < n; i++)
         cin>>speeds[i];
+    //Holds the different types of pairings of skill levels
     vector<array<ll, 2>> types;
     for(int i = 0; i < 3; i++)
         for(int j = 0; j <= i; j++)
             types.push_back({i, j});
-      
+    //Sort them according to lowest to highest strength sum
     function<bool(array<ll, 2>, array<ll, 2>)> comp = [&](array<ll, 2> a, array<ll, 2> b){
         return (str[a[0]]+str[a[1]] < str[b[0]]+str[b[1]]);
     };
@@ -28,9 +29,12 @@ int main(){
     sort(types.begin(), types.end(), comp);
     
     function<bool(vector<ll>, ll)> valid = [&](vector<ll> f, ll minimum){
+        //Set i to n-1 to start from the highest speed factors
         ll i = n-1;
         for(auto x: types){
             ll sum = str[x[0]] + str[x[1]];
+            //Greedily match the smallest sums with the highest speed factors to
+            //see if it's enough for the value we are binary searching
             while(i >= 0 && f[x[0]] >= 1 + (x[0] == x[1]) && f[x[1]] >= 1 && sum*speeds[i] >= minimum){
                 i--;
                 f[x[0]]--;
